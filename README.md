@@ -1,53 +1,184 @@
-# VSCode Simulator project for LVGL
+# 🚀 期末專題：摩托車儀表模擬器
+# Final Project: Motorcycle Dashboard Simulator
 
-[LVGL](https://github.com/lvgl/lvgl) is written mainly for microcontrollers and embedded systems, however you can run the library **on your PC** as well without any embedded hardware. The code written on PC can be simply copied when your are using an embedded system.
+[![LVGL](https://img.shields.io/badge/LVGL-v9.4.0--dev-blue)](https://github.com/lvgl/lvgl)
+[![CMake](https://img.shields.io/badge/CMake-3.12+-green)](https://cmake.org/)
+[![SDL2](https://img.shields.io/badge/SDL2-2.0+-red)](https://www.libsdl.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-This project is pre-configured for VSCode and should work work on Windows, Linux and MacOs as well. FreeRTOS is also included and can be optionally enabled to better simulate embedded system's behavior. 
+## 📋 專題概述
 
-## Get started
+本專題基於 **LVGL (Light and Versatile Graphics Library)** 開發的摩托車儀表模擬器，實現完整的車載資訊顯示系統。專題結合嵌入式系統概念與現代圖形介面技術，展示摩托車儀表板的各項功能。
 
-### Install SDL and the build tools
+### 🎯 主要功能
 
-- **Windows (vcpkg):** `vcpkg install sdl2`  (`vcpkg` can be installed from [https://github.com/microsoft/vcpkg](https://github.com/microsoft/vcpkg)) Also install either MinGW or another compier and `cmake`.
-- **macOS (Homebrew):** `brew install sdl2 cmake make`  
-- **Linux:**  
-  - **Debian/Ubuntu:** `sudo apt install build-essential cmake libsdl2-dev`  
-  - **Arch:** `sudo pacman -S base-devel cmake sdl2`  
-  - **Fedora:** `sudo dnf install @development-tools cmake SDL2-devel`  
-- **Manual Installation of SDL:** Download from [SDL’s website](https://github.com/libsdl-org/SDL/releases) and place headers/libraries in your project.
-- **Verify Installation:** `sdl2-config --version`, `cmake --version`, `gcc --version`, `g++ --version` (should return the installed version).  
+- **即時儀表顯示**：速度、轉速、油位、溫度等關鍵指標
+- **動態UI動畫**：流暢的指針動畫和狀態轉換
+- **設定選單系統**：可自定義的參數調整介面
+- **中文字體支援**：完整的中文介面顯示
+- **實時狀態模擬**：物理引擎驅動的動態數據
+- **跨平台支援**：Windows、Linux、macOS
 
-### Get the PC project
+### 🏗️ 技術架構
 
-Clone the PC project and the related sub modules:
-
-```bash
-git clone --recursive https://github.com/lvgl/lv_port_pc_vscode
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   LVGL v9.4     │    │     SDL2        │    │   FreeType      │
+│  Graphics Core  │◄──►│ Display Backend │◄──►│  Font Engine    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         ▲                       ▲                       ▲
+         │                       │                       │
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ State Manager   │    │   UI Dashboard  │    │ Settings Menu   │
+│ 物理引擎        │    │ 儀表介面        │    │ 設定系統        │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## Usage
+## 🚀 快速開始
 
-### Visual Studio Code
+### 環境需求
 
-1. Be sure you have installed [SDL and the build tools](#install-sdl-and-the-build-tools)
-2. Open the project by double clicking on `simulator.code-workspace` or opening it with `File/Open Workspace from File`
-3. Install the recommended plugins
-4. Click the Run and Debug page on the left, and select `Debug LVGL demo with gdb` from the drop-down on the top. Like this:
-![image](https://github.com/lvgl/lv_port_pc_vscode/assets/7599318/f527b235-5718-4949-b5f0-bd807b3a64ba)
-5. Click the Play button or hit F5 to start debugging.
+- **作業系統**：Linux Ubuntu 18.04+ / Windows 10+ / macOS 10.15+
+- **編譯器**：GCC 7.0+ / Clang 6.0+ / MSVC 2017+
+- **建置工具**：CMake 3.12+
+- **依賴套件**：
+  - SDL2 2.0+
+  - FreeType 2.8+
+  - CMake 3.12+
 
-#### ArchLinux User
+### 安裝依賴套件
 
-VSCode does not officially provide an installation package under Arch, you need to use the AUR manager `paru` to install it.
-The command is as follows:
-
+#### Ubuntu/Debian
 ```bash
-paru -S visual-studio-code-bin
+sudo apt update
+sudo apt install build-essential cmake libsdl2-dev libfreetype6-dev
 ```
 
-#### macOS
+#### Windows (vcpkg)
+```bash
+vcpkg install sdl2 freetype
+```
 
-Apple's default clang does not support the `-fsanitize=leak` flag.
+#### macOS (Homebrew)
+```bash
+brew install sdl2 freetype cmake
+```
+
+### 建置專題
+
+```bash
+# 1. 建立建置目錄
+mkdir build && cd build
+
+# 2. 配置 CMake
+cmake ..
+
+# 3. 編譯專題
+make -j$(nproc)
+
+# 4. 執行模擬器
+./bin/main
+```
+
+### VS Code 開發環境
+
+1. 開啟專題：雙擊 `simulator.code-workspace`
+2. 安裝推薦擴充套件
+3. 按 F5 或使用除錯面板啟動
+
+## 📁 專題結構
+
+```
+LVGL/
+├── src/                    # 核心源碼
+│   ├── main.c             # 主程式入口
+│   ├── hal/               # 硬體抽象層
+│   │   ├── hal.c
+│   │   └── hal.h
+│   ├── ui_*.c/.h          # UI 模組
+│   └── freertos/          # FreeRTOS 移植
+├── docs/                   # 技術文檔 (中文)
+│   ├── 00_文檔導覽.md
+│   ├── 01_專案總覽與設計方法.md
+│   ├── 02_main.c_詳解.md
+│   └── ...
+├── CMakeLists.txt         # 建置配置
+├── lv_conf.h             # LVGL 配置
+├── .gitignore            # Git 忽略規則
+└── README.md             # 本文件
+```
+
+## 🎮 使用說明
+
+### 基本操作
+
+- **滑鼠**：點擊按鈕和控制項
+- **鍵盤**：ESC 退出程式
+- **視窗**：800x600 解析度
+
+### 功能模組
+
+1. **主儀表板**：顯示所有關鍵指標
+2. **設定選單**：調整系統參數
+3. **狀態管理**：實時數據更新
+
+## 📚 技術文檔
+
+詳細的技術文檔位於 `docs/` 目錄：
+
+- [📋 文檔導覽](docs/00_文檔導覽.md)
+- [🏗️ 專案總覽](docs/01_專案總覽與設計方法.md)
+- [⚙️ 程式碼詳解](docs/02_main.c_詳解.md)
+- [🔧 建置設定](docs/04_CMakeLists建置設定詳解.md)
+- [📖 完整功能說明](docs/05_完整功能說明與程式改動對照.md)
+
+## 🛠️ 開發與除錯
+
+### 建置選項
+
+```bash
+# 除錯模式 (預設)
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+
+# 發行模式
+cmake -DCMAKE_BUILD_TYPE=Release ..
+
+# 啟用 AddressSanitizer
+cmake -DENABLE_ASAN=ON ..
+```
+
+### 程式碼風格
+
+- 遵循 C99 標準
+- 使用 4 空格縮排
+- 函數註釋使用 Doxygen 格式
+- 變數命名使用 snake_case
+
+## 🤝 貢獻指南
+
+1. Fork 此專題
+2. 建立功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交變更 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送分支 (`git push origin feature/AmazingFeature`)
+5. 開啟 Pull Request
+
+## 📄 授權條款
+
+本專題採用 MIT 授權條款 - 詳見 [LICENSE](LICENSE) 文件
+
+## 🙏 致謝
+
+- [LVGL](https://github.com/lvgl/lvgl) - 輕量級圖形庫
+- [SDL2](https://www.libsdl.org/) - 跨平台多媒體庫
+- [FreeType](https://www.freetype.org/) - 字體渲染引擎
+
+---
+
+**🏫 國立台東大學 嵌入式系統軟體技術 期末專題**
+
+**📅 開發期間：2025年**
+
+**👨‍💻 開發者：學生專題作品**
 
 to build using the latest version of clang from homebrew, do the following:
 
@@ -70,7 +201,7 @@ To correctly configure the project, the RTOS (Real-Time Operating System) requir
 This configuration ensures that the SDL window is displayed in a timely manner. If this value is reduced, it may cause significant delays in the SDL window's appearance. If the allocated heap memory is too small, the window may fail to appear altogether.
 Therefore, it is crucial to allocate sufficient heap memory to ensure smooth execution and debugging experience.
 
-### Enable FreeRTOS 
+### Enable FreeRTOS
 To enable the rtos part of this project select in lv_conf.h `#define LV_USE_OS   LV_OS_NONE` to `#define LV_USE_OS  LV_OS_FREERTOS`
 Additionaly you have to enable the compilation of all FreeRTOS Files by turning on the `option(USE_FREERTOS "Enable FreeRTOS" OFF)` in the CMakeLists.txt file or
 by enabling the same flag from the command line when bootstrapping `cmake`:
@@ -105,7 +236,7 @@ int main(int argc, char **argv)
   /* - lv_demo_stress(); */
   /* - lv_example_label_1(); */
   /* - etc. */
-  lv_demo_widgets(); 
+  lv_demo_widgets();
 
   while(1) {
       /* ... */
@@ -139,11 +270,11 @@ make
 sudo make install
 ```
 ### (RT)OS support
-Works with any OS like pthred, Windows, FreeRTOS, etc. It has build in support for FreeRTOS. 
+Works with any OS like pthred, Windows, FreeRTOS, etc. It has build in support for FreeRTOS.
 
 ## Test
-This project is configured for [VSCode](https://code.visualstudio.com) and is tested on: 
-- Ubuntu Linux 
+This project is configured for [VSCode](https://code.visualstudio.com) and is tested on:
+- Ubuntu Linux
 - Windows WSL (Ubuntu Linux)
 
 It requires a working version of GCC, GDB and make in your path.
