@@ -1,0 +1,55 @@
+# 期末專題：摩托車儀表模擬器
+# Final Project: Motorcycle Dashboard Simulator
+
+# 建置產物 / Build artifacts
+build/
+bin/
+*.exe
+*.o
+*.a
+*.so
+*.dll
+
+# 系統檔案 / System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE 檔案 / IDE files
+.vscode/settings.json
+.vscode/launch.json
+*.code-workspace
+
+# 日誌檔案 / Log files
+*.log
+logs/
+
+# 備份檔案 / Backup files
+*.bak
+*.backup
+*~
+
+# 臨時檔案 / Temporary files
+tmp/
+temp/
+.cache/
+
+# LVGL 相關排除 / LVGL specific excludes
+lvgl/tests/
+lvgl/docs/
+lvgl/examples/
+lvgl/demos/
+
+# FreeRTOS 相關排除 / FreeRTOS specific excludes
+FreeRTOS/examples/
+FreeRTOS/coverity/
+
+# 專題文檔備份 / Project documentation backups
+*_backup_*.zip
+*_backup_*.tar.gz
+
+# 個人筆記 / Personal notes (if any)
+notes.txt
+todo.txt
