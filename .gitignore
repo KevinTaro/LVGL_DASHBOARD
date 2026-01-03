@@ -1,55 +1,87 @@
 # 期末專題：摩托車儀表模擬器
 # Final Project: Motorcycle Dashboard Simulator
 
-# 建置產物 / Build artifacts
-build/
-bin/
-*.exe
-*.o
-*.a
-*.so
-*.dll
+# ----- 建置/產物 (ignore build outputs) -----
+/build/
+/build-*/
+/bin/
+/lib/
+/out/
 
-# 系統檔案 / System files
+# ----- CMake / generated files -----
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+Makefile.cmake
+compile_commands.json
+install_manifest.txt
+
+# ----- 編譯產物 -----
+*.o
+*.obj
+*.so
+*.a
+*.dylib
+*.dll
+*.exe
+*.out
+*.elf
+*.map
+*.bin
+*.hex
+
+# ----- 系統與暫存檔案 -----
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
 *~
 
-# IDE 檔案 / IDE files
+# ----- IDE / 編輯器 -----
+.vscode/
+*.code-workspace
 .vscode/settings.json
 .vscode/launch.json
-*.code-workspace
+.idea/
+*.sublime-project
+*.sublime-workspace
 
-# 日誌檔案 / Log files
+# ----- 日誌、備份與臨時檔案 -----
 *.log
 logs/
-
-# 備份檔案 / Backup files
 *.bak
 *.backup
-*~
-
-# 臨時檔案 / Temporary files
 tmp/
 temp/
 .cache/
 
-# LVGL 相關排除 / LVGL specific excludes
-lvgl/tests/
-lvgl/docs/
-lvgl/examples/
-lvgl/demos/
+# ----- 文件/文件生成 (若你會產生 build 版文件，可取消註解) -----
+# docs/_build/
+# docs/build/
 
-# FreeRTOS 相關排除 / FreeRTOS specific excludes
-FreeRTOS/examples/
-FreeRTOS/coverity/
+# ----- 注意：不要忽略原始碼、範例與文件 (它們是 repo 的一部分) -----
+# lvgl/
+# lvgl/examples/
+# lvgl/demos/
+# lvgl/docs/
+# FreeRTOS/
 
-# 專題文檔備份 / Project documentation backups
+# ----- Python / 環境 -----
+__pycache__/
+*.py[cod]
+venv/
+.env
+.envrc
+
+# ----- 測試 與 覆蓋率 -----
+.coverage
+coverage/
+htmlcov/
+
+# ----- 其他 -----
+*.lock
 *_backup_*.zip
 *_backup_*.tar.gz
 
-# 個人筆記 / Personal notes (if any)
-notes.txt
-todo.txt
+# 如果想忽略其他工具或 CI 產生的檔案，告訴我檔名或路徑，我可以幫你加入。
